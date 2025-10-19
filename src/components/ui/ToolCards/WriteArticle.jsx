@@ -4,6 +4,8 @@ import { SquarePen } from "lucide-react";
 import LabelList from "../label/LabelList";
 import { useState } from "react";
 import { InputCard, OutputCard } from "@/components/ui/cards/index";
+import { toast } from "sonner";
+import { Spinner } from "@/components/shadcn/ui/spinner";
 
 const Labels = [
   {
@@ -20,13 +22,26 @@ const Labels = [
   },
 ];
 
-const submitAction = () => {
-  console.log("Article Generated");
-};
-
 const WriteArticle = () => {
   const [articleLength, setArticleLength] = useState("short");
   const [article, setArticle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [generatedArticle, setGeneratedArticle] = useState("");
+
+  /////////////////// FUNCTIONS ///////////////////
+
+  const submitAction = () => {
+    if (!article) {
+      toast("Please enter an article topic", { type: "warning" });
+      return;
+    }
+    console.log(articleLength);
+    console.log(article);
+    console.log("Article Generated");
+  };
+
+  /////////////////// FUNCTIONS ///////////////////
+
   return (
     <div className="flex gap-4">
       <InputCard
@@ -35,6 +50,7 @@ const WriteArticle = () => {
         buttonIcon={SquarePen}
         colorScheme="chart3"
         submitAction={submitAction}
+        disabled={isLoading}
       >
         {/* Input field */}
         <div className="flex flex-col gap-3 mb-6">
@@ -43,6 +59,8 @@ const WriteArticle = () => {
             type="text"
             placeholder="Chickens are cute dinosaurs with..."
             id="article-topic"
+            value={article}
+            onChange={(e) => setArticle(e.target.value)}
           />
         </div>
         {/* Tag select */}
@@ -64,7 +82,13 @@ const WriteArticle = () => {
         colorScheme="chart3"
         title={"Generated Article"}
         desc={"Enter a topic and click “Generate article” to get started"}
-      ></OutputCard>
+      >
+        {isLoading && (
+          <div className="h-full flex justify-center items-center">
+            <Spinner className={"size-8 text-muted-foreground"} />
+          </div>
+        )}
+      </OutputCard>
     </div>
   );
 };

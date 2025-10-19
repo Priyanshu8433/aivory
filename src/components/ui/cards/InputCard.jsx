@@ -45,6 +45,7 @@ const InputCard = ({
   buttonIcon: ButtonIcon,
   buttonText,
   colorScheme = "chart1",
+  disabled = false,
 }) => {
   const colors = colorSchemes[colorScheme] || colorSchemes.chart3;
   return (
@@ -60,8 +61,10 @@ const InputCard = ({
         <Button
           className={cn("w-full", colors.bg, colors.hoverBg)}
           onClick={() => {
+            if (disabled) return;
             submitAction();
           }}
+          disabled={disabled}
         >
           <ButtonIcon />
           <span>{buttonText}</span>

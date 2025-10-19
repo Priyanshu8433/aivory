@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import ToolContextProvider from "@/components/providers/ToolContextProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/themes";
+import { Toaster } from "@/components/shadcn/ui/sonner";
 import "./globals.css";
 
 export const metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
               <div>{children}</div>
             </ToolContextProvider>
           </ThemeProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
