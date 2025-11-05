@@ -16,7 +16,7 @@ if (!cached) {
 
 async function dbConnect() {
   if (cached.conn) {
-    console.log("MongoDB Connected");
+    console.log("MongoDB Cached");
     return cached.conn;
   }
   if (!cached.promise) {

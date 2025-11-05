@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@/components/shadcn/ui/input";
 import { Label } from "@/components/shadcn/ui/label";
 import { InputCard, OutputCard } from "@/components/ui/cards/index";
@@ -18,7 +20,7 @@ const ReviewResume = () => {
         submitAction={submitAction}
       >
         <div className="flex flex-col gap-3">
-          <Label>Upload image</Label>
+          <Label>Upload resume</Label>
           <Input
             type="file"
             accept="application/pdf"

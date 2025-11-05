@@ -1,4 +1,5 @@
-import { Input } from "@/components/shadcn/ui/input";
+"use client";
+
 import { Label } from "@/components/shadcn/ui/label";
 import { Textarea } from "@/components/shadcn/ui/textarea";
 import { InputCard, OutputCard } from "@/components/ui/cards/index";
@@ -54,17 +55,17 @@ const GenerateImage = () => {
       >
         {/* Input field */}
         <div className="flex flex-col gap-3 mb-6">
-          <Label htmlFor="article-topic">Article Topic</Label>
+          <Label htmlFor="image-description">Describe your image</Label>
           <Textarea
             type="text"
             placeholder="A mammoth with dragon wings flying into hell..."
-            id="article-topic"
+            id="image-description"
           />
         </div>
 
         {/* Tag select */}
         <div className="flex flex-col gap-3">
-          <Label>Article Length</Label>
+          <Label>Style</Label>
           <div className="flex gap-2">
             <LabelList
               Labels={Labels}

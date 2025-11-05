@@ -1,7 +1,7 @@
-import { api } from "@/lib/apiCalls";
 import dbConnect from "@/lib/db";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   await dbConnect();
-  return await api();
+  return NextResponse.json({ status: "success", message: "API is working!" });
 }

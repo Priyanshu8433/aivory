@@ -1,3 +1,5 @@
+"use client";
+
 import { Scissors } from "lucide-react";
 import { InputCard, OutputCard } from "@/components/ui/cards/index";
 import { Input } from "@/components/shadcn/ui/input";

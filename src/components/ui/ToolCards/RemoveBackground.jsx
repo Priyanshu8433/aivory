@@ -1,3 +1,5 @@
+"use client";
+
 import { Eraser } from "lucide-react";
 import { InputCard, OutputCard } from "@/components/ui/cards/index";
 import { Label } from "@/components/shadcn/ui/label";

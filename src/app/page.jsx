@@ -1,7 +1,5 @@
 "use client";
 
-import { AuroraBackground } from "@/components/shadcn/ui/aurora-background";
-import { motion } from "motion/react";
 import HeroSection from "@/components/ui/HeroSection";
 import Navbar from "@/components/ui/menus/Navbar";
 

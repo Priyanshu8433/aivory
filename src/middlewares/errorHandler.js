@@ -19,9 +19,9 @@ export function handleError(error) {
 }
 
 export function asyncHandler(fn) {
-  return async function (request) {
+  return async function (request, ...args) {
     try {
-      return await fn(request);
+      return await fn(request, ...args);
     } catch (error) {
       return handleError(error);
     }

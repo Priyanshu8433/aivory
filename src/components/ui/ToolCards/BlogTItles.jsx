@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@/components/shadcn/ui/input";
 import { Label } from "@/components/shadcn/ui/label";
 import { InputCard, OutputCard } from "@/components/ui/cards/index";
@@ -57,16 +59,16 @@ const BlogTItles = () => {
       >
         {/* Input field */}
         <div className="flex flex-col gap-3 mb-6">
-          <Label htmlFor="article-topic">Article Topic</Label>
+          <Label htmlFor="keyword">Keyword</Label>
           <Input
             type="text"
             placeholder="Unicorns are better than mermaids..."
-            id="article-topic"
+            id="keyword"
           />
         </div>
         {/* Tag select */}
         <div className="flex flex-col gap-3">
-          <Label>Article Length</Label>
+          <Label>Category</Label>
           <div className="flex gap-2">
             <LabelList
               Labels={Labels}

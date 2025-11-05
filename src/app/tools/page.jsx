@@ -11,6 +11,7 @@ import {
 import Dashboard from "@/components/ui/Dashboard";
 import Community from "@/components/ui/Community";
 import { useContext } from "react";
+import { useUser } from "@clerk/nextjs";
 
 const tools = {
   dashboard: Dashboard,
@@ -24,6 +25,7 @@ const tools = {
 };
 
 const Tools = () => {
+
   const { tool } = useContext(ToolContext);
   const SelectedTool = tools[tool];
   return (

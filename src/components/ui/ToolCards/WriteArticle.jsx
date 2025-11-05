@@ -1,3 +1,5 @@
+"use client";
+
 import { Label } from "@/components/shadcn/ui/label";
 import { Input } from "@/components/shadcn/ui/input";
 import { SquarePen } from "lucide-react";
