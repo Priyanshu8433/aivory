@@ -7,6 +7,10 @@ import {
 import React from "react";
 import { cn } from "@/lib/utils";
 import { SquarePen } from "lucide-react";
+import { Spinner } from "@/components/shadcn/ui/spinner";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 
 const colorSchemes = {
   chart1: {
@@ -43,6 +47,9 @@ function OutputCard({
   desc,
   icon: Icon,
   colorScheme,
+  content,
+  type,
+  isLoading,
 }) {
   const colors = colorSchemes[colorScheme] || colorSchemes.chart1;
   return (
@@ -53,11 +60,22 @@ function OutputCard({
           <CardTitle className={"text-xl"}>{title}</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className={"h-full"}>
-        {children ? (
-          children
+      <CardContent className="h-full overflow-y-scroll no-scrollbar">
+        {isLoading ? (
+          <div className="h-full flex justify-center items-center">
+            <Spinner className="size-8 text-muted-foreground" />
+          </div>
+        ) : content ? (
+          <div className="prose dark:prose-invert max-w-none">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+            >
+              {content}
+            </ReactMarkdown>
+          </div>
         ) : (
-          <div className="flex flex-col items-center justify-center gap-4 h-full  text-muted-foreground">
+          <div className="flex flex-col items-center justify-center gap-4 h-full text-muted-foreground">
             <Icon className="!h-8 !w-8" />
             <span className="text-sm">{desc}</span>
           </div>

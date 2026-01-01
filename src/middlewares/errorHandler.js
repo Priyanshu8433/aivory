@@ -13,7 +13,10 @@ export function handleError(error) {
   }
 
   return NextResponse.json(
-    { error: error.message || "Internal Server Error" },
+    {
+      status: "error",
+      message: error.message || "Internal Server Error",
+    },
     { status: 500 }
   );
 }

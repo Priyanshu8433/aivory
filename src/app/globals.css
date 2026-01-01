@@ -198,6 +198,14 @@
   --shadow-2xl: 0px 4px 24px -8px hsl(0 0% 0% / 0.5);
 }
 
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

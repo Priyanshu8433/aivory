@@ -8,38 +8,52 @@ import { useState } from "react";
 import { InputCard, OutputCard } from "@/components/ui/cards/index";
 import { toast } from "sonner";
 import { Spinner } from "@/components/shadcn/ui/spinner";
+import axios from "axios";
 
 const Labels = [
   {
     name: "Short (500-800 words)",
-    value: "short",
+    value: "500-800",
   },
   {
     name: "Medium (800-1200 words)",
-    value: "medium",
+    value: "800-1200",
   },
   {
     name: "Long (1200+ words)",
-    value: "long",
+    value: "1200+",
   },
 ];
 
 const WriteArticle = () => {
-  const [articleLength, setArticleLength] = useState("short");
+  const [articleLength, setArticleLength] = useState("500-800");
   const [article, setArticle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [generatedArticle, setGeneratedArticle] = useState("");
 
   /////////////////// FUNCTIONS ///////////////////
 
-  const submitAction = () => {
+  const submitAction = async () => {
+    // TODO: Integrate with backend API
+    
     if (!article) {
       toast("Please enter an article topic", { type: "warning" });
       return;
     }
-    console.log(articleLength);
-    console.log(article);
-    console.log("Article Generated");
+
+    setIsLoading(true);
+    try {
+      const response = await axios.post("/api/v1/generate-article", {
+        topic: article,
+        length: articleLength,
+      });
+      setGeneratedArticle(response.data.article);
+      console.log(response.data);
+    } catch (error) {
+      toast("Error generating article. Please try again later", { type: "error" });
+    } 
+    setIsLoading(false);
+
   };
 
   /////////////////// FUNCTIONS ///////////////////
@@ -84,12 +98,18 @@ const WriteArticle = () => {
         colorScheme="chart3"
         title={"Generated Article"}
         desc={"Enter a topic and click “Generate article” to get started"}
+        content={generatedArticle}
+        type={"text"}
+        isLoading={isLoading}
       >
-        {isLoading && (
+        {!isLoading && generatedArticle && (
+          <p>{generatedArticle}</p>
+        )}
+        {/* {isLoading && (
           <div className="h-full flex justify-center items-center">
             <Spinner className={"size-8 text-muted-foreground"} />
           </div>
-        )}
+        )} */}
       </OutputCard>
     </div>
   );

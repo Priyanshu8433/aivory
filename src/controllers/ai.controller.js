@@ -1,14 +1,30 @@
 import { NextResponse } from "next/server";
 import { asyncHandler } from "@/middlewares/errorHandler";
+import { ai } from "@/lib/gemini";
 
 // Generate article
-export const generateArticle = async (request) => {
+export const generateArticle = asyncHandler(async (request) => {
   const { topic, length } = await request.json();
   // Logic to generate article based on topic and length
-  return NextResponse.json({
-    message: `Article generated for topic: ${topic} with length: ${length}`,
+  console.log(topic, length);
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: `Write a ${length} words article on the topic: ${topic}`,
+    config: {
+      thinkingConfig: {
+        thinkingBudget: 0,
+      },
+      systemInstructions: `You are an expert content writer specializing in creating engaging, well-structured Markdown articles. 
+                            You always write in Markdown format using clear section headings, subheadings, bullet points, and code blocks when needed. 
+                            Avoid any meta text (like “Here’s your article”). Only output the article itself.
+                            `,
+    },
   });
-};
+  return NextResponse.json({
+    status: "success",
+    article: response.text,
+  });
+});
 
 // Generate blog titles
 export const generateBlogTitles = asyncHandler(async (request) => {
