@@ -6,7 +6,6 @@ import { ai } from "@/lib/gemini";
 export const generateArticle = asyncHandler(async (request) => {
   const { topic, length } = await request.json();
   // Logic to generate article based on topic and length
-  console.log(topic, length);
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",
     contents: `Write a ${length} words article on the topic: ${topic}`,
@@ -30,8 +29,21 @@ export const generateArticle = asyncHandler(async (request) => {
 export const generateBlogTitles = asyncHandler(async (request) => {
   const { keyword, category } = await request.json();
   // Logic to generate blog titles based on keyword and category
+  console.log({ keyword, category });
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: `Generate 5 blog post titles for a blog in the category ${category} for the keyword: ${keyword}. And don't start with "Here are five blog titles..."`,
+    config: {
+      thinkingConfig: {
+        thinkingBudget: 0,
+      },
+      // systemInstructions: ``,
+    },
+  });
+  console.log(response.text);
   return NextResponse.json({
-    message: `Blog titles generated for keyword: ${keyword} in category: ${category}`,
+    status: "success",
+    title: response.text,
   });
 });
 

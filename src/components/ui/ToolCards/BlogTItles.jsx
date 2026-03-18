@@ -6,6 +6,8 @@ import { InputCard, OutputCard } from "@/components/ui/cards/index";
 import { Hash } from "lucide-react";
 import LabelList from "../label/LabelList";
 import { useState } from "react";
+import { toast } from "sonner";
+import axios from "axios";
 
 const Labels = [
   {
@@ -42,12 +44,39 @@ const Labels = [
   },
 ];
 
-const submitAction = () => {
-  console.log("Title generated");
-};
-
 const BlogTItles = () => {
   const [category, setCategory] = useState("general");
+  const [isLoading, setIsLoading] = useState(false);
+  const [generatedTitle, setGeneratedTitle] = useState("");
+  const [keyword, setKeyword] = useState("");
+
+  /////////////////// FUNCTIONS ///////////////////
+
+  const submitAction = async () => {
+    if (!keyword) {
+      toast("Please enter a keyword", { type: "warning" });
+      return;
+    }
+    console.log("Generating title for:", { keyword, category });
+
+    setIsLoading(true);
+    try {
+      const response = await axios.post("/api/v1/generate-blog-title", {
+        keyword,
+        category,
+      });
+      setGeneratedTitle(response.data.title);
+      console.log(response.data);
+    } catch (error) {
+      toast("Error generating title. Please try again later", {
+        type: "error",
+      });
+    }
+    setIsLoading(false);
+  };
+
+  /////////////////// FUNCTIONS ///////////////////
+
   return (
     <div className="flex gap-4">
       <InputCard
@@ -64,6 +93,8 @@ const BlogTItles = () => {
             type="text"
             placeholder="Unicorns are better than mermaids..."
             id="keyword"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
           />
         </div>
         {/* Tag select */}
@@ -84,7 +115,12 @@ const BlogTItles = () => {
         colorScheme="chart2"
         title={"Generated Title"}
         desc={"Enter a topic and click “Generate title to get started"}
-      ></OutputCard>
+        content={generatedTitle}
+        type={"text"}
+        isLoading={isLoading}
+      >
+        {!isLoading && generatedTitle && <p>{generatedTitle}</p>}
+      </OutputCard>
     </div>
   );
 };

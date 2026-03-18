@@ -35,7 +35,7 @@ const WriteArticle = () => {
 
   const submitAction = async () => {
     // TODO: Integrate with backend API
-    
+
     if (!article) {
       toast("Please enter an article topic", { type: "warning" });
       return;
@@ -50,10 +50,11 @@ const WriteArticle = () => {
       setGeneratedArticle(response.data.article);
       console.log(response.data);
     } catch (error) {
-      toast("Error generating article. Please try again later", { type: "error" });
-    } 
+      toast("Error generating article. Please try again later", {
+        type: "error",
+      });
+    }
     setIsLoading(false);
-
   };
 
   /////////////////// FUNCTIONS ///////////////////
@@ -102,9 +103,7 @@ const WriteArticle = () => {
         type={"text"}
         isLoading={isLoading}
       >
-        {!isLoading && generatedArticle && (
-          <p>{generatedArticle}</p>
-        )}
+        {!isLoading && generatedArticle && <p>{generatedArticle}</p>}
         {/* {isLoading && (
           <div className="h-full flex justify-center items-center">
             <Spinner className={"size-8 text-muted-foreground"} />

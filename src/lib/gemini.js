@@ -7,6 +7,6 @@ if (!apiKey) {
   );
 }
 
-const ai = new GoogleGenAI({ apiKeyw });
+const ai = new GoogleGenAI({ apiKey });
 
 export { ai };
